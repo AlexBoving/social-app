@@ -11,3 +11,15 @@ To get started, follow these simple steps:
 git clone https://github.com/Alex1721/clock-clone-ios-app-react-native.git
 cd clockApp
 ```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Run the app
+
+```bash
+npx expo start -c
+```
