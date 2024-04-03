@@ -26,4 +26,4 @@ npx expo start -c
 
 ## Backend
 
-This project uses Convex as a BAAS and Clerk for authentication and user management. It is mandatory to create a personal account in both services and configure the .env.local file accordingly. Furthermore, a detailed step-by-step guide is given on both services website in order to embed them together. 
+This project uses Convex as a BAAS and Clerk for authentication and user management. It is mandatory to create a personal account in both services and configure the .env.local file accordingly. Furthermore, a detailed step-by-step guide is given on both services website in order to embed them together.
