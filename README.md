@@ -1,2 +1,2 @@
-# social-app-react-native
-This open repository is dedicated to the build of a social application linking musicians with event-organizers. Feel free to fork the project and enhance it.
+# Social Network mobile application.
+Welcome to the open-source repository showcasing Expo Router V2's navigation system through the design and build of a social network mobile application.
