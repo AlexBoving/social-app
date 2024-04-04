@@ -29,3 +29,5 @@ npx expo start -c
 This project uses Convex as a BAAS and Clerk for authentication and user management. It is mandatory to create a personal account in both services and configure the .env.local file accordingly. Furthermore, a detailed step-by-step guide is given on both services website in order to embed them together.
 
 ## Demo
+
+![Simulator Screen Recording - iPhone 15 Pro - 2024-04-04 at 16 59 26](https://github.com/Alex1721/social-app-react-native/assets/73285589/4835b362-28df-464b-b846-45a8347a50ec)
