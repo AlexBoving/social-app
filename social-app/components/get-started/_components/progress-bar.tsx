@@ -43,7 +43,7 @@ const ProgressBar = ({ step, steps }: ProgressBarProps) => {
         style={[
           styles.fill,
           {
-            //backgroundColor: themeColors.tertiary,
+            backgroundColor: themeColors.primary,
             transform: [{ translateX: animatedValue }],
           },
         ]}

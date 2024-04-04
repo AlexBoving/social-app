@@ -22,6 +22,7 @@ const ProfileSettings = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [description, setDescription] = useState("Short description about me");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [step, setStep] = useState(0);
 
   const router = useRouter();
 
@@ -29,6 +30,7 @@ const ProfileSettings = () => {
 
   const scrollTo = (x: number) => {
     _ScrollView.current?.scrollTo({ x, y: 0, animated: true });
+    setStep(x / 275);
   };
 
   const handleSubmit = async () => {
@@ -68,7 +70,7 @@ const ProfileSettings = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ProgressBar step={0} steps={4} />
+      <ProgressBar step={step} steps={3} />
       <ScrollView
         ref={_ScrollView}
         horizontal

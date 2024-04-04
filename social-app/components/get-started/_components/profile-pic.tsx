@@ -1,4 +1,4 @@
-import { View, Pressable, StyleSheet } from "react-native";
+import { View, Pressable, StyleSheet, useColorScheme } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
 import React, { useState } from "react";
@@ -15,6 +15,9 @@ interface ProfilePicProps {
 const ProfilePic = ({ saveImage }: ProfilePicProps) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [icon, setIcon] = useState<"plus" | "close">("plus");
+
+  const colorScheme = useColorScheme();
+  const themeColors = colorScheme === "dark" ? Colors.dark : Colors.light;
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -46,7 +49,10 @@ const ProfilePic = ({ saveImage }: ProfilePicProps) => {
         placeholderImage={PlaceholderImage}
         selectedImage={selectedImage}
       />
-      <Pressable onPress={handleImage} style={styles.cross}>
+      <Pressable
+        onPress={handleImage}
+        style={[styles.cross, { backgroundColor: themeColors.primary }]}
+      >
         <AntDesign name={icon} size={24} color={"white"} />
       </Pressable>
     </View>
@@ -62,7 +68,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     right: -5,
-    //backgroundColor: Colors.primary,
     borderColor: "white",
     borderWidth: 2,
   },

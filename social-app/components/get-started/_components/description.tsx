@@ -25,10 +25,18 @@ const Description = ({ description, setDescription }: DescriptionProps) => {
 
   return (
     <View style={{ gap: 5 }}>
-      <Text style={{ fontSize: 20, color: themeColors.text }}>
-        Tell us more about yourself
+      <Text style={{ paddingLeft: 5, fontSize: 20, color: themeColors.text }}>
+        Willing to share us more info?
       </Text>
-      <View style={[styles.description, { borderColor: themeColors.text }]}>
+      <View
+        style={[
+          styles.description,
+          {
+            borderColor: themeColors.text,
+            backgroundColor: themeColors.surface,
+          },
+        ]}
+      >
         <TextInput
           placeholder="Insert your description..."
           value={description}
@@ -37,7 +45,7 @@ const Description = ({ description, setDescription }: DescriptionProps) => {
           }}
           multiline={true}
           maxLength={150}
-          style={{ flex: 1 }}
+          style={{ flex: 1, color: themeColors.text, fontSize: 16 }}
         />
         <Text style={[styles.text, { color: themeColors.text }]}>
           {wordCounter} / 150
@@ -51,8 +59,8 @@ export default Description;
 
 const styles = StyleSheet.create({
   description: {
-    height: 80,
-    padding: 5,
+    height: 90,
+    padding: 10,
     borderWidth: 1,
     borderRadius: 12,
   },

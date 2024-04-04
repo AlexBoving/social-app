@@ -12,9 +12,6 @@ import Description from "./_components/description";
 import Footer from "./_components/footer";
 
 import React, { useState } from "react";
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import { Id } from "convex/_generated/dataModel";
 
 interface SmileProps {
   setSelectedImage: (image: string | null) => void;
@@ -25,31 +22,6 @@ const Smile = ({ setSelectedImage, handleSubmit }: SmileProps) => {
   const windowWidth = Dimensions.get("window").width;
 
   const [description, setDescription] = useState("");
-  //const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  // const user = useQuery(api.user.getUser, {});
-
-  /* const handleSubmit = async () => {
-    if (selectedImage) {
-      const sendImageUrl = new URL(
-        `${process.env.EXPO_PUBLIC_CONVEX_SITE}/sendImage`
-      );
-
-      sendImageUrl.searchParams.set("id", user?._id as Id<"user">);
-      console.log("Send Image URL: ", sendImageUrl);
-
-      // Convert URI to blob
-      const response = await fetch(selectedImage);
-      const blob = await response.blob();
-
-      // Send blob to convex
-      await fetch(sendImageUrl, {
-        method: "POST",
-        headers: { "Content-Type": blob!.type },
-        body: blob,
-      });
-    }
-  };*/
 
   return (
     <KeyboardAvoidingView
@@ -58,16 +30,12 @@ const Smile = ({ setSelectedImage, handleSubmit }: SmileProps) => {
       keyboardVerticalOffset={80}
     >
       <Header
-        title="Share us some information!"
-        subtitle="Your information can be modified later on in your profile settings."
+        title="Don't forget to smile!"
+        subtitle="Select a profile picture."
       />
-
       <ProfilePic saveImage={setSelectedImage} />
-
       <Description description={description} setDescription={setDescription} />
-
       <View style={{ flex: 1 }} />
-
       <Footer hidden={false} onPress={handleSubmit} />
     </KeyboardAvoidingView>
   );
