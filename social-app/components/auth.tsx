@@ -1,7 +1,18 @@
-import { Pressable, Image, Text, StyleSheet, SafeAreaView } from "react-native";
+import {
+  Pressable,
+  Image,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  useColorScheme,
+} from "react-native";
+
+import Colors from "@/constants/Colors";
+
 import { useOAuth } from "@clerk/clerk-expo";
 import { useWarmUpBrowser } from "@/hooks/useWarmUpBrowser";
 import * as WebBrowser from "expo-web-browser";
+
 import React from "react";
 
 WebBrowser.maybeCompleteAuthSession();
@@ -12,6 +23,9 @@ enum Strategy {
 
 const Authentication = () => {
   useWarmUpBrowser();
+
+  const colorScheme = useColorScheme();
+  const themeColors = colorScheme === "dark" ? Colors.dark : Colors.light;
 
   const { startOAuthFlow: googleAuth } = useOAuth({
     strategy: Strategy.Google,
@@ -52,6 +66,7 @@ export default Authentication;
 
 const styles = StyleSheet.create({
   container: {
+    marginHorizontal: 15,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
