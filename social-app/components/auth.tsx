@@ -48,7 +48,13 @@ const Authentication = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        backgroundColor: themeColors.background,
+      }}
+    >
       <Pressable
         onPress={() => onSelectAuth(Strategy.Google)}
         style={[styles.container, { borderColor: themeColors.text }]}
