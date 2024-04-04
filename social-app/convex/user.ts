@@ -38,3 +38,28 @@ export const getMyUser = query({
     return user;
   },
 });
+
+// This query return all the users except the current user.
+export const getUsers = query({
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    const { tokenIdentifier } = identity!;
+    const users = await ctx.db
+      .query("user")
+      .filter((q) => q.neq(q.field("user_id"), tokenIdentifier))
+      .collect();
+
+    // if the user has a file, get the URL from the storage.
+    return Promise.all(
+      users.map(async (user) => {
+        if (user.file) {
+          const url = await ctx.storage.getUrl(user.file as Id<"_storage">);
+          if (url) {
+            return { ...user, file: url };
+          }
+        }
+        return user;
+      })
+    );
+  },
+});

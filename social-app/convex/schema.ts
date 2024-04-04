@@ -10,4 +10,10 @@ export default defineSchema({
     description: v.string(),
     file: v.optional(v.string()),
   }),
+  chats: defineTable({
+    user_1: v.id("user"),
+    user_2: v.id("user"),
+    last_comment: v.optional(v.string()),
+    timestamp: v.number(),
+  }),
 });
