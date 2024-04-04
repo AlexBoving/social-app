@@ -66,11 +66,9 @@ const Finder = () => {
       _id: Id<"user">;
       _creationTime: number;
       file?: string | undefined;
-      type: string;
       user_id: string;
       username: string;
       date_of_birth: string;
-      gender: string;
       phone_number: string;
       description: string;
     }[]
