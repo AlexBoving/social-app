@@ -12,13 +12,13 @@ const Redirection = () => {
     const loadPage = async () => {
       const user = await convex.query(api.user.getMyUser);
       if (!user) {
-        router.replace("/get-started/");
+        router.replace("/(application)/");
       }
     };
     loadPage();
   }, []);
 
-  return <Redirect href="/get-started/" />;
+  return <Redirect href="/(application)" />;
 };
 
 export default Redirection;

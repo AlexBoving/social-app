@@ -9,10 +9,10 @@ import {
 } from "react-native";
 import { Stack, Link, useRouter } from "expo-router";
 import Colors from "@/constants/Colors";
-import OtherUser from "@/components/other-user";
+import OtherUser from "@/components/chats/other-user";
 import React, { useEffect, useState } from "react";
 import { useConvex, useQuery } from "convex/react";
-import { api } from "convex/_generated/api";
+import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 
 interface RenderItemProps {

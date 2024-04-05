@@ -1,7 +1,7 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
-// This mutation creates a new group.
+// This mutation creates a new chat.
 export const createChat = mutation({
   args: {
     user_1: v.id("user"),
