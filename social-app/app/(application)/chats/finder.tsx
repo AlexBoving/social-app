@@ -6,6 +6,7 @@ import {
   Image,
   Pressable,
   SafeAreaView,
+  StyleSheet,
 } from "react-native";
 import { Stack, Link, useLocalSearchParams } from "expo-router";
 import Colors from "@/constants/Colors";
@@ -24,34 +25,13 @@ interface RenderItemProps {
 const RenderItem = ({ name }: RenderItemProps) => {
   const colorScheme = useColorScheme();
   const themeColors = colorScheme === "dark" ? Colors.dark : Colors.light;
+  const border = colorScheme === "dark" ? "grey" : "darkgrey";
   return (
     <Link href={`/chats/${name}`} asChild>
-      <Pressable
-        style={{
-          flexDirection: "row",
-          gap: 5,
-        }}
-      >
-        <Image
-          source={PlaceholderImage}
-          style={{ width: 60, height: 60, borderRadius: 50 }}
-        />
-        <View
-          style={{
-            flex: 1,
-            borderBottomWidth: 1,
-            paddingTop: 10,
-            borderBottomColor: "rgb(0,0,0,0.1)",
-          }}
-        >
-          <Text
-            style={{
-              color: themeColors.text,
-              fontSize: 18,
-            }}
-          >
-            {name}
-          </Text>
+      <Pressable style={styles.container}>
+        <Image source={PlaceholderImage} style={styles.image} />
+        <View style={[styles.nameContainer, { borderBottomColor: border }]}>
+          <Text style={[styles.text, { color: themeColors.text }]}>{name}</Text>
         </View>
       </Pressable>
     </Link>
@@ -93,7 +73,6 @@ const Finder = () => {
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
-      console.log(newData);
       setFilteredData(newData);
     } else {
       setFilteredData(data);
@@ -130,3 +109,23 @@ const Finder = () => {
 };
 
 export default Finder;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    gap: 5,
+  },
+  image: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+  },
+  nameContainer: {
+    flex: 1,
+    borderBottomWidth: 1,
+    paddingTop: 10,
+  },
+  text: {
+    fontSize: 18,
+  },
+});

@@ -18,10 +18,10 @@ const ProfileSettings = () => {
 
   const [username, setUsername] = useState("");
   const [birth, setBirth] = useState("17-06-1999");
-  const [gender, setGender] = useState("male");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [description, setDescription] = useState("Short description about me");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   const [step, setStep] = useState(0);
 
   const router = useRouter();
@@ -30,7 +30,7 @@ const ProfileSettings = () => {
 
   const scrollTo = (x: number) => {
     _ScrollView.current?.scrollTo({ x, y: 0, animated: true });
-    setStep(x / 275);
+    setStep(step + 1);
   };
 
   const handleSubmit = async () => {
@@ -82,7 +82,6 @@ const ProfileSettings = () => {
         <BirthAndGender
           scroll={scrollTo}
           setBirth={setBirth}
-          setGender={setGender}
           setPhoneNumber={setPhoneNumber}
         />
         <Smile

@@ -22,14 +22,12 @@ import { Link, useLocalSearchParams } from "expo-router";
 interface BirthAndGenderProps {
   scroll: (x: number) => void;
   setBirth: (date: string) => void;
-  setGender: (gender: string) => void;
   setPhoneNumber: (phoneNumber: string) => void;
 }
 
 const BirthAndGender = ({
   scroll,
   setBirth,
-  setGender,
   setPhoneNumber,
 }: BirthAndGenderProps) => {
   const { index } = useLocalSearchParams();
@@ -52,7 +50,6 @@ const BirthAndGender = ({
 
   const scrollTo = () => {
     setBirth(birthdate);
-    setGender(sex);
     scroll(windowWidth * 2);
   };
 

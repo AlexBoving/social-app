@@ -63,3 +63,46 @@ export const getUsers = query({
     );
   },
 });
+
+// This query returns multiple users by their IDs.
+export const getUserByIds = query({
+  args: { userIds: v.optional(v.array(v.id("user"))) },
+  handler: async (ctx, args) => {
+    if (args.userIds) {
+      return Promise.all(
+        args.userIds.map(async (userId) => {
+          const user = await ctx.db
+            .query("user")
+            .filter((q) => q.eq(q.field("_id"), userId))
+            .unique();
+
+          return {
+            username: user?.username as string,
+            _id: userId,
+          };
+        })
+      );
+    } else {
+      return [];
+    }
+  },
+});
+
+// This query returns a user by their ID.
+export const getUserById = query({
+  args: { userId: v.id("user") },
+  handler: async (ctx, args) => {
+    const user = await ctx.db
+      .query("user")
+      .filter((q) => q.eq(q.field("_id"), args.userId))
+      .unique();
+
+    if (user?.file) {
+      const url = await ctx.storage.getUrl(user.file as Id<"_storage">);
+      if (url) {
+        return { ...user, file: url };
+      }
+    }
+    return user;
+  },
+});

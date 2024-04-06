@@ -1,7 +1,5 @@
 import {
   View,
-  Text,
-  SafeAreaView,
   StyleSheet,
   useColorScheme,
   FlatList,
@@ -9,7 +7,7 @@ import {
 } from "react-native";
 import { Stack, Link, useRouter } from "expo-router";
 import Colors from "@/constants/Colors";
-import OtherUser from "@/components/chats/other-user";
+import ChatDisplay from "@/components/chats/chat-display";
 import React, { useEffect, useState } from "react";
 import { useConvex, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -17,7 +15,7 @@ import { Id } from "@/convex/_generated/dataModel";
 
 interface RenderItemProps {
   item: {
-    _id: Id<"chats">;
+    _id: Id<"user">;
     username: string;
     last_comment: string;
     timestamp: string;
@@ -25,15 +23,18 @@ interface RenderItemProps {
 }
 
 const RenderItem = ({ item }: RenderItemProps) => {
+  const colorScheme = useColorScheme();
+  const themeColors = colorScheme === "dark" ? Colors.dark : Colors.light;
   return (
     <Link
       href={{
-        pathname: `/chats/${item._id}`,
+        pathname: "/(application)/chats/[chat]",
+        params: { chat: item._id },
       }}
       asChild
     >
       <Pressable>
-        <OtherUser
+        <ChatDisplay
           username={item.username}
           comment={item.last_comment}
           date={item.timestamp}
@@ -51,7 +52,7 @@ const Index = () => {
 
   const [chats, setChats] = useState<
     {
-      _id: Id<"chats">;
+      _id: Id<"user">;
       username: string;
       last_comment: string;
       timestamp: string;
@@ -61,30 +62,27 @@ const Index = () => {
 
   useEffect(() => {
     const loadChats = async () => {
+      // Retrieves all the chat groups for the current user.
       const chatGroups = await convex.query(api.chats.get, {
         user: user?._id as Id<"user">,
       });
+      // Retrieves the other user in all of the chat groups.
       const otherUsers = chatGroups.map((chat) => {
         const otherUser = chat.user_1 === user?._id ? chat.user_2 : chat.user_1;
         return otherUser;
       });
-
+      // Retrieves the usernames of the other users.
       const otherNames = await convex.query(api.user.getUserByIds, {
         userIds: otherUsers,
       });
-
+      // Prepares the chat data to be displayed.
       const chats = otherNames.map((otherName) => {
-        const _id = chatGroups.find(
-          (chat) =>
-            chat.user_1 === otherName._id || chat.user_2 === otherName._id
-        )?._id;
-        const name = otherName.username;
         const last_comment = chatGroups.find(
           (chat) => chat.user_1 === user?._id || chat.user_2 === otherName._id
         )?.last_comment;
         return {
-          _id: _id as Id<"chats">,
-          username: name,
+          _id: otherName._id as Id<"user">,
+          username: otherName.username,
           last_comment: last_comment as string,
           timestamp: "Fri",
         };
@@ -110,7 +108,7 @@ const Index = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <Stack.Screen
         options={{
           headerSearchBarOptions: {
@@ -121,18 +119,17 @@ const Index = () => {
           },
         }}
       />
-      <View style={styles.container}>
-        <FlatList
-          data={filteredChats}
-          keyExtractor={(item) => item._id.toString()}
-          renderItem={({ item }) => <RenderItem item={item} />}
-          ItemSeparatorComponent={() => {
-            return <View style={{ height: 10 }} />;
-          }}
-          contentInsetAdjustmentBehavior={"automatic"}
-        />
-      </View>
-    </SafeAreaView>
+      <FlatList
+        data={filteredChats}
+        keyExtractor={(item) => item._id.toString()}
+        renderItem={({ item }) => <RenderItem item={item} />}
+        ItemSeparatorComponent={() => {
+          return <View style={{ height: 10 }} />;
+        }}
+        contentInsetAdjustmentBehavior={"automatic"}
+        style={styles.container}
+      />
+    </View>
   );
 };
 

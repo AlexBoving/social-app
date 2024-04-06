@@ -3,8 +3,7 @@ import { Link, Stack } from "expo-router";
 import Colors from "@/constants/Colors";
 
 import React from "react";
-import { Ionicons } from "@expo/vector-icons";
-import { FontAwesome6 } from "@expo/vector-icons";
+import { Feather, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Layout = () => {
   const colorScheme = useColorScheme();
@@ -25,19 +24,14 @@ const Layout = () => {
             color: themeColors.text,
           },
           headerLargeTitle: true,
-          headerTransparent: true,
-          headerBlurEffect: "regular",
           headerTintColor: themeColors.text,
-          headerStyle: { backgroundColor: themeColors.background },
+          headerTransparent: true,
+          headerBlurEffect: "light",
           headerRight: () => {
             return (
               <Link href={"/(application)/chats/finder"} asChild>
                 <Pressable>
-                  <FontAwesome6
-                    name="pen-to-square"
-                    size={20}
-                    color={themeColors.text}
-                  />
+                  <Feather name="pen-tool" size={24} color={themeColors.text} />
                 </Pressable>
               </Link>
             );
@@ -45,7 +39,11 @@ const Layout = () => {
           headerLeft: () => {
             return (
               <Pressable>
-                <Text style={{ color: "white", fontSize: 20 }}>Edit</Text>
+                <MaterialCommunityIcons
+                  name="dots-horizontal-circle-outline"
+                  size={24}
+                  color={themeColors.text}
+                />
               </Pressable>
             );
           },
@@ -54,6 +52,9 @@ const Layout = () => {
       <Stack.Screen
         name="[chat]"
         options={{
+          headerTitleStyle: {
+            color: "white",
+          },
           headerStyle: {
             backgroundColor: styleHeader,
           },
@@ -74,20 +75,10 @@ const Layout = () => {
       <Stack.Screen
         name="finder"
         options={{
+          presentation: "modal",
           headerTitle: "New message",
           headerTransparent: true,
           headerTintColor: themeColors.text,
-          headerLeft: () => {
-            return (
-              <Link href="../" asChild>
-                <Pressable>
-                  <Text style={{ color: themeColors.text, fontSize: 18 }}>
-                    Cancel
-                  </Text>
-                </Pressable>
-              </Link>
-            );
-          },
         }}
       />
     </Stack>
