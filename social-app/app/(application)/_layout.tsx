@@ -3,6 +3,7 @@ import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import React from "react";
 
 const Layout = () => {
+  const segments = useSegments();
   return (
     <Tabs
       screenOptions={{
@@ -35,6 +36,9 @@ const Layout = () => {
           tabBarIcon: ({ color }) => (
             <Ionicons name="chatbubble-outline" color={color} size={30} />
           ),
+          tabBarStyle: {
+            display: segments[2] === "[chat]" ? "none" : "flex",
+          },
         }}
       />
       <Tabs.Screen
