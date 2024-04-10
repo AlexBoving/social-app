@@ -1,12 +1,5 @@
-import {
-  View,
-  StyleSheet,
-  useColorScheme,
-  FlatList,
-  Pressable,
-} from "react-native";
-import { Stack, Link, useRouter } from "expo-router";
-import Colors from "@/constants/Colors";
+import { View, StyleSheet, FlatList, Pressable } from "react-native";
+import { Stack, Link } from "expo-router";
 import ChatDisplay from "@/components/chats/chat-display";
 import React, { useEffect, useState } from "react";
 import { useConvex, useQuery } from "convex/react";
@@ -15,7 +8,7 @@ import { Id } from "@/convex/_generated/dataModel";
 
 interface RenderItemProps {
   item: {
-    _id: Id<"user">;
+    _id: Id<"chats">;
     username: string;
     last_comment: string;
     timestamp: string;
@@ -23,8 +16,6 @@ interface RenderItemProps {
 }
 
 const RenderItem = ({ item }: RenderItemProps) => {
-  const colorScheme = useColorScheme();
-  const themeColors = colorScheme === "dark" ? Colors.dark : Colors.light;
   return (
     <Link
       href={{
@@ -47,12 +38,10 @@ const RenderItem = ({ item }: RenderItemProps) => {
 const Index = () => {
   const convex = useConvex();
   const user = useQuery(api.user.getMyUser);
-  const colorScheme = useColorScheme();
-  const themeColors = colorScheme === "dark" ? Colors.dark : Colors.light;
 
   const [chats, setChats] = useState<
     {
-      _id: Id<"user">;
+      _id: Id<"chats">;
       username: string;
       last_comment: string;
       timestamp: string;
@@ -62,26 +51,31 @@ const Index = () => {
 
   useEffect(() => {
     const loadChats = async () => {
-      // Retrieves all the chat groups for the current user.
+      // Retrieves all the chat groups which the current user is in.
       const chatGroups = await convex.query(api.chats.get, {
         user: user?._id as Id<"user">,
       });
-      // Retrieves the other user in all of the chat groups.
-      const otherUsers = chatGroups.map((chat) => {
+      // Retrieves the other user id in all of the chat groups.
+      const otherUsersId = chatGroups.map((chat) => {
         const otherUser = chat.user_1 === user?._id ? chat.user_2 : chat.user_1;
         return otherUser;
       });
-      // Retrieves the usernames of the other users.
-      const otherNames = await convex.query(api.user.getUserByIds, {
-        userIds: otherUsers,
+      // Retrieves the username of the other users.
+      const otherUsers = await convex.query(api.user.getUserByIds, {
+        userIds: otherUsersId,
       });
       // Prepares the chat data to be displayed.
-      const chats = otherNames.map((otherName) => {
+      const chats = otherUsers.map((otherName) => {
+        const chatId = chatGroups.find(
+          (chat) =>
+            chat.user_1 === otherName?._id || chat.user_2 === otherName._id
+        )?._id;
         const last_comment = chatGroups.find(
-          (chat) => chat.user_1 === user?._id || chat.user_2 === otherName._id
+          (chat) =>
+            chat.user_1 === otherName?._id || chat.user_2 === otherName._id
         )?.last_comment;
         return {
-          _id: otherName._id as Id<"user">,
+          _id: chatId as Id<"chats">,
           username: otherName.username,
           last_comment: last_comment as string,
           timestamp: "Fri",
