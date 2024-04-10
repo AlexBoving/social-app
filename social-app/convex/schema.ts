@@ -16,4 +16,10 @@ export default defineSchema({
     last_comment: v.optional(v.string()),
     timestamp: v.number(),
   }),
+  messages: defineTable({
+    content: v.string(),
+    chat_id: v.id("chats"),
+    user: v.string(),
+    file: v.optional(v.string()),
+  }),
 });
