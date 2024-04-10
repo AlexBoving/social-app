@@ -14,7 +14,7 @@ export const createChat = mutation({
   },
 });
 
-// This is a mutation that deletes a group by it's object id.
+// This mutation deletes a group by it's object id.
 export const deleteChat = mutation({
   args: { chatId: v.id("chats") },
   handler: async (ctx, args) => {
@@ -22,7 +22,7 @@ export const deleteChat = mutation({
   },
 });
 
-// This is a query that returns all the other users inside of all the chat groups related to your profile.
+// This query returns chat groups related to your profile.
 export const get = query({
   args: { user: v.optional(v.id("user")) },
   handler: async (ctx, args) => {
@@ -38,5 +38,13 @@ export const get = query({
       .collect();
 
     return chats;
+  },
+});
+
+// This query returns the chat group by it's object id.
+export const getChatById = query({
+  args: { chatId: v.id("chats") },
+  handler: async (ctx, args) => {
+    return await ctx.db.get(args.chatId);
   },
 });

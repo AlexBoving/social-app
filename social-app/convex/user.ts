@@ -71,11 +71,7 @@ export const getUserByIds = query({
     if (args.userIds) {
       return Promise.all(
         args.userIds.map(async (userId) => {
-          const user = await ctx.db
-            .query("user")
-            .filter((q) => q.eq(q.field("_id"), userId))
-            .unique();
-
+          const user = await ctx.db.get(userId);
           return {
             username: user?.username as string,
             _id: userId,
@@ -92,10 +88,7 @@ export const getUserByIds = query({
 export const getUserById = query({
   args: { userId: v.id("user") },
   handler: async (ctx, args) => {
-    const user = await ctx.db
-      .query("user")
-      .filter((q) => q.eq(q.field("_id"), args.userId))
-      .unique();
+    const user = await ctx.db.get(args.userId);
 
     if (user?.file) {
       const url = await ctx.storage.getUrl(user.file as Id<"_storage">);

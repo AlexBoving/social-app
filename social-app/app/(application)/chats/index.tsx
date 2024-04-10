@@ -37,7 +37,7 @@ const RenderItem = ({ item }: RenderItemProps) => {
 
 const Index = () => {
   const convex = useConvex();
-  const user = useQuery(api.user.getMyUser);
+  const myUser = useQuery(api.user.getMyUser);
 
   const [chats, setChats] = useState<
     {
@@ -53,11 +53,12 @@ const Index = () => {
     const loadChats = async () => {
       // Retrieves all the chat groups which the current user is in.
       const chatGroups = await convex.query(api.chats.get, {
-        user: user?._id as Id<"user">,
+        user: myUser?._id as Id<"user">,
       });
       // Retrieves the other user id in all of the chat groups.
       const otherUsersId = chatGroups.map((chat) => {
-        const otherUser = chat.user_1 === user?._id ? chat.user_2 : chat.user_1;
+        const otherUser =
+          chat.user_1 === myUser?._id ? chat.user_2 : chat.user_1;
         return otherUser;
       });
       // Retrieves the username of the other users.
@@ -81,12 +82,11 @@ const Index = () => {
           timestamp: "Fri",
         };
       });
-
       setChats(chats);
       setFilteredChats(chats);
     };
     loadChats();
-  }, [user]);
+  }, [myUser]);
 
   const searchFilterFunction = (text: string) => {
     if (text) {
