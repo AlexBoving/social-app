@@ -8,7 +8,7 @@ To get started, follow these simple steps:
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/Alex1721/clock-clone-ios-app-react-native.git
+git clone https://github.com/Alex1721/social-app-react-native.git
 cd social-app
 ```
 
