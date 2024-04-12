@@ -1,5 +1,5 @@
-const tintColorLight = "#2f95dc";
-const tintColorDark = "#fff";
+const tintColorLight = "black";
+const tintColorDark = "white";
 
 export default {
   light: {
@@ -8,6 +8,8 @@ export default {
     surface: "#E1E8EE",
     text: "#000",
     background: "#fff",
+    tabBarActiveTintColor: tintColorLight,
+    tabBarInactiveTintColor: "#8e8e93",
   },
   dark: {
     primary: "#97ACC5",
@@ -15,5 +17,7 @@ export default {
     surface: "#2B2D3A",
     text: "#fff",
     background: "#000",
+    tabBarActiveTintColor: tintColorDark,
+    tabBarInactiveTintColor: "#4d4d53",
   },
 };
