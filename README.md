@@ -9,7 +9,7 @@ To get started, follow these simple steps:
 
 ```bash
 git clone https://github.com/Alex1721/clock-clone-ios-app-react-native.git
-cd clockApp
+cd social-app
 ```
 
 ### Install Dependencies
