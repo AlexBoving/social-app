@@ -6,7 +6,7 @@ import * as ImagePicker from "expo-image-picker";
 
 import ImageViewer from "./picker/imageViewer";
 
-const PlaceholderImage = require("@/assets/images/profile/gradient.png");
+const PlaceholderImage = require("@/assets/images/profile/woman-tennis.jpg");
 
 interface ProfilePicProps {
   saveImage: (image: string | null) => void;

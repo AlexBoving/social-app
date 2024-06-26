@@ -88,7 +88,7 @@ const Finder = () => {
             textColor: "white",
             hideWhenScrolling: false,
             hideNavigationBar: false,
-            onChangeText: (event) => {
+            onChangeText: (event: any) => {
               searchFilterFunction(event.nativeEvent.text);
             },
           },

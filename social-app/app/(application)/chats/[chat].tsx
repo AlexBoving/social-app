@@ -3,7 +3,6 @@ import {
   Text,
   useColorScheme,
   StyleSheet,
-  SafeAreaView,
   Keyboard,
   FlatList,
   KeyboardAvoidingView,
@@ -21,7 +20,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useConvex, useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id, Doc } from "@/convex/_generated/dataModel";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
 const Chat = () => {
   // Back-end + Navigation
